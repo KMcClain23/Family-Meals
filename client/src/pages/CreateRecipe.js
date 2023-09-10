@@ -38,7 +38,7 @@ export const CreateRecipe = () => {
                 <button onClick={addIngredient} type="button">Add Ingredient</button>
                 <label htmlFor="instructions">Instructions</label>
                 <textarea id="instructions" name="instructions" onChange={handleChange}></textarea>
-                <label htmlFor="imageURL">Image Url</label>
+                <label htmlFor="imageUrl">Image Url</label>
                 <input type="text" id="imageUrl" name="imageUrl" onChange={handleChange}/>
                 <label htmlFor="cookingTime">Cooking Time (minutes)</label>
                 <input type="number" id="cookingTime" name="cookingTime" onChange={handleChange}/>
