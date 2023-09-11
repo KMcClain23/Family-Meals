@@ -10,8 +10,8 @@ const app = express()
 app.use(express.json());
 app.use(cors());
 
-app.use("/auth", userRouter)
-app.use("/recipes", recipesRouter)
+app.use("/Auth", userRouter)
+app.use("/Recipes", recipesRouter)
 
 mongoose.connect(
     "mongodb+srv://snoopyods:MERNpassword123@cluster0.1uzhcuy.mongodb.net/Cluster0?retryWrites=true&w=majority"
