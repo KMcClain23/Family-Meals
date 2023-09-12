@@ -26,9 +26,15 @@ export const Home = () => {
         const fetchSavedRecipe = async () => {
             try {
                 const response = await axios.get(`http://localhost:3001/recipes/savedRecipes/ids/${userID}`);
-                setSavedRecipes(response.data.savedRecipes);
+                if (response.data && Array.isArray(response.data.savedRecipes)) {
+                    setSavedRecipes(response.data.savedRecipes);
+                } else {
+                    console.error('Unexpected response format:', response.data);
+                    setSavedRecipes([]);
+                }
             } catch (err) {
                 console.error(err);
+                setSavedRecipes([]);
             }
         };
 
@@ -48,7 +54,7 @@ export const Home = () => {
         }
     };
 
-    const isRecipeSaved = (id) => savedRecipes.includes(id);
+    const isRecipeSaved = (id) => savedRecipes ? savedRecipes.includes(id) : false;
 
     return (
         <div>
