@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate, Route, Routes } from "react-router-dom";
 import Login from "./Login"; // Import your existing Login component
 import RegisterForm from "./RegisterForm"; // Import the new RegisterForm component
+import '../App.css'
 
 export const Auth = () => {
     const navigate = useNavigate();
