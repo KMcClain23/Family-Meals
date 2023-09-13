@@ -2,6 +2,10 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { UserModel } from '../models/Users.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
+const SECRET_KEY= process.env.SECRET_KEY;
 
 const router = express.Router();
 
@@ -35,7 +39,7 @@ router.post("/login", async (req, res) => {
         return res.json({ message: "Username or Password is incorrect."})
     }
 
-    const token = jwt.sign({id: user._id}, "secretsecret");
+    const token = jwt.sign({id: user._id}, SECRET_KEY);
     res.json({ token, userID: user._id });
 
 });
@@ -50,7 +54,7 @@ export const verifyToken = (req, res, next) => {
     if (!token) {
         return res.sendStatus(401);
     }
-    jwt.verify(token, "secretsecret", (err, decodedToken) => {
+    jwt.verify(token, SECRET_KEY, (err, decodedToken) => {
         if (err) {
             console.log("JWT Verification Error:", err);
             return res.sendStatus(403);

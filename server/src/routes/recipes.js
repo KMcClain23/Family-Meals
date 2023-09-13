@@ -1,10 +1,24 @@
 import express from 'express';
+import multer from 'multer';
 import { verifyToken } from './users.js';
 import { RecipeModel } from "../models/Recipes.js";
 import { UserModel } from '../models/Users.js';
+
 // import getNutrients from '../lib/apiWrapper.js'
 
+
 const router = express.Router();
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './uploads/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
+    }
+});
+
+const upload = multer({ storage: storage });
 
 router.get("/", async (req, res) => {
     try {
@@ -13,6 +27,15 @@ router.get("/", async (req, res) => {
     } catch (err) {
         res.json(err);
     }
+});
+
+router.post('/upload', upload.single('image'), (req, res) => {
+    const url = req.protocol + '://' + req.get('host')
+    const imageURL = url + '/uploads/' + req.file.filename;
+    res.status(200).json({
+        message: 'Image Uploaded Successfully!',
+        imageURL: imageURL
+    });
 });
 
 router.post("/", verifyToken, async (req, res) => {
