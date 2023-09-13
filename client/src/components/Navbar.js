@@ -13,7 +13,7 @@ export const Navbar = () => {
   const logout = () => {
     setCookies("access_token", "");
     window.localStorage.clear();
-    navigate("/Auth");
+    navigate("/");
   };
 
   const items = [
@@ -36,13 +36,13 @@ export const Navbar = () => {
             label: 'Create Recipe',
             key: 'create',
             icon: <PlusCircleOutlined />,
-            path: "/create"
+            path: "/CreateRecipe"
           },
           {
             label: 'Saved Recipes',
             key: 'saved',
             icon: <HeartOutlined />,
-            path: "/saved"
+            path: "/SavedRecipes"
           },
         ]
       },
@@ -59,7 +59,7 @@ export const Navbar = () => {
       label: 'Login/Register',
       key: 'auth',
       icon: <LoginOutlined />,
-      path: "/login"
+      path: "/Login"
     });
   }
 

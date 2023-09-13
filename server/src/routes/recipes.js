@@ -1,8 +1,8 @@
 import express from 'express';
-import mongoose from 'mongoose';
+import { verifyToken } from './users.js';
 import { RecipeModel } from "../models/Recipes.js";
 import { UserModel } from '../models/Users.js';
-import { verifyToken } from './users.js';
+// import getNutrients from '../lib/apiWrapper.js'
 
 const router = express.Router();
 
@@ -19,6 +19,8 @@ router.post("/", verifyToken, async (req, res) => {
     const recipe = new RecipeModel(req.body);
     try {
         const response = await recipe.save();
+        // console.log(req.body.ingredients);
+        // getNutrients(req.body.ingredients)
         res.json(response);
     } catch (err) {
         res.json(err);
@@ -58,4 +60,25 @@ router.get("/savedRecipes/:userID", async (req, res) => {
     }
 })
 
-export { router as recipesRouter }
+router.delete('/:recipeID', verifyToken, async (req, res) => {
+    try {
+        const userID = req.userId;
+        const recipeID = req.params.recipeID;
+
+        const user = await UserModel.findById(userID);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.savedRecipes = user.savedRecipes.filter(id => id.toString() !== recipeID);
+
+        await user.save();
+
+        res.json({ message: 'Recipe removed from saved recipes' });
+    } catch (err) {
+        console.error(err.message); 
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+export { router as recipesRouter };

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
@@ -18,9 +18,18 @@ const Login = () => {
                 password: values.password,
             });
 
-            setCookies("access_token", result.data.token);
-            window.localStorage.setItem("userID", result.data.userID);
-            navigate("/");
+            if (result.data.message === "User does not exist.") {
+                // Handle the case when the user does not exist
+                message.error("User does not exist. Please check your username.");
+            } else if (result.data.message === "Username or Password is incorrect.") {
+                // Handle the case when the password is incorrect
+                message.error("Username or Password is incorrect. Please try again.");
+            } else {
+                // Login successful
+                setCookies("access_token", result.data.token);
+                window.localStorage.setItem("userID", result.data.userID);
+                navigate("/");
+            }
         } catch (error) {
             console.error(error);
         }
@@ -35,9 +44,9 @@ const Login = () => {
                 remember: true,
             }}
             onFinish={onFinish}
-            labelCol={{ span: 6 }} // Adjust label column width
-            wrapperCol={{ span: 18 }} // Adjust wrapper column width
-            style={{ maxWidth: 600, margin: "0 auto" }} // Match max width and center align
+            labelCol={{ span: 6 }}
+            wrapperCol={{ span: 18 }}
+            style={{ maxWidth: 600, margin: "0 auto" }}
         >
             <h2>Login</h2>
             <Form.Item

@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useGetUserID } from "../hooks/useGetUserID";
 import { useCookies } from "react-cookie";
-import { Card, Col, Row } from 'antd';
+import { Card, Col, Row, Button } from 'antd';
+
 import 'antd/dist/reset.css';
+
 
 
 
@@ -60,18 +62,19 @@ export const Home = () => {
 
     return (
         <div className="site-card-wrapper">
-        <Row gutter={16}>
-        {recipes.map((recipe) => (
-            <Col span={8}>
-                <Card className="recipe-card" title={recipe.name} bordered={false}>
-                    <img className="recipe-image" src={recipe.imageURL} alt={recipe.name}/>
-                    <p>{recipe.instructions}</p>
-                    <p>Cooking Time: {recipe.cookingTime} (minutes)</p>
-                    <button onClick={() => saveRecipe(recipe._id)} disabled={isRecipeSaved(recipe._id)}>{isRecipeSaved(recipe._id) ? "Saved" : "Save Recipe"}</button>
-                </Card>
-            </Col>
-            ))}
-        </Row>
+            <Row gutter={16}>
+                {recipes.map((recipe) => (
+                    <Col xs={24} sm={12} md={8} lg={6} key={recipe._id}>
+                        <Card className="recipe-card" bordered={false}>
+                            <h2 className="recipe-title">{recipe.name}</h2>
+                            <img className="recipe-image" src={recipe.imageURL} alt={recipe.name}/>
+                            <p>{recipe.instructions}</p>
+                            <p>Cooking Time: {recipe.cookingTime} (minutes)</p>
+                            <Button type="primary" onClick={() => saveRecipe(recipe._id)} disabled={isRecipeSaved(recipe._id)}> {isRecipeSaved(recipe._id) ? "Saved" : "Save Recipe"} </Button>
+                        </Card>
+                    </Col>
+                ))}
+            </Row>
         </div>
     );
 };

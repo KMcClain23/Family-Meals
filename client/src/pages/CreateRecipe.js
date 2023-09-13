@@ -4,7 +4,8 @@ import { useGetUserID } from "../hooks/useGetUserID";
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from "react-cookie";
 import { CloseOutlined } from "@ant-design/icons";
-import { Button, Card, Form, Input, Space, Typography, InputNumber } from "antd";
+import { Button, Card, Form, Input, } from "antd";
+import getNutrients from '../lib/apiWrapper.js'
 
 export const CreateRecipe = () => {
     const userID = useGetUserID();
@@ -16,6 +17,7 @@ export const CreateRecipe = () => {
         instructions: "",
         imageURL: "https://via.placeholder.com/600x400",
         cookingTime: 0,
+        nutrients: [],
         userOwner: userID,
     });
 
@@ -33,14 +35,18 @@ export const CreateRecipe = () => {
         setRecipe({ ...recipe, ingredients });
     };
 
-    // const addIngredient = () => {
-    //     setRecipe({ ...recipe, ingredients: [...recipe.ingredients, ""] });
-    // };
-    // console.log(recipe);
-
     const onSubmit = async (event) => {
-        console.log("In Submit");
         try {
+            (async () => {
+                try {
+                    const nutrients = await getNutrients(recipe.ingredients);
+                    console.log(nutrients);
+                  // You can use the nutrients list here
+                } catch (error) {
+                  // Handle errors here
+                    console.error(error);
+                }})()
+
         await axios.post("http://localhost:3001/recipes", recipe, {
             headers: { Authorization: cookies.access_token },
         });
@@ -74,7 +80,7 @@ export const CreateRecipe = () => {
             {(ingredients, { add, remove }) => (
                 <div style={{ display: "flex", rowGap: 16, flexDirection: "column" }} >
                 {ingredients.map((ingredient, idx) => (
-                    <Card size="small" title="Money" key={ingredient.key} extra={ <CloseOutlined onClick={() => { remove(ingredient.name); }} />}>
+                    <Card size="small" title={`Ingredient ${ingredient.name + 1}`} key={ingredient.key} extra={ <CloseOutlined onClick={() => { remove(ingredient.name); }} />}>
                     
                     <Form.Item label={`Ingredient ${ingredient.name + 1}`} > 
                         <Input name={[ingredient.name, "name"]} onChange={(event) => handleIngredientChange(event, idx)}/> 

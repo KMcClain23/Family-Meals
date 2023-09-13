@@ -46,12 +46,17 @@ export { router as userRouter };
 
 export const verifyToken = (req, res, next) => {
     const token = req.headers.authorization;
-    if (token) {
-        jwt.verify(token, "secretsecret", (err) => {
-            if (err) return res.sendStatus(403);
-            next();
-        })
-    } else {
-        res.sendStatus(401);
+
+    if (!token) {
+        return res.sendStatus(401);
     }
+    jwt.verify(token, "secretsecret", (err, decodedToken) => {
+        if (err) {
+            console.log("JWT Verification Error:", err);
+            return res.sendStatus(403);
+        }
+
+        req.userId = decodedToken.id;
+        next();
+    });
 };
