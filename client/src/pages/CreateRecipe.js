@@ -1,119 +1,184 @@
+import React, { useState } from "react";
 import axios from "axios";
-import { useState } from "react";
-import { useGetUserID } from "../hooks/useGetUserID";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { CloseOutlined } from "@ant-design/icons";
-import { Button, Card, Form, Input, } from "antd";
-import getNutrients from '../lib/apiWrapper.js'
+import { CloseOutlined, InboxOutlined } from "@ant-design/icons";
+import { Button, Card, Form, Input, message, Upload } from "antd";
+import getNutrients from "../lib/apiWrapper.js";
+import { useGetUserID } from "../hooks/useGetUserID";
+
+// const { Dragger } = Upload;
 
 export const CreateRecipe = () => {
-    const userID = useGetUserID();
-    const [cookies,] = useCookies(["access_token"]);
+  const userID = useGetUserID();
+  const [cookies] = useCookies(["access_token"]);
 
-    const [recipe, setRecipe] = useState({
-        name: "",
-        ingredients: [],
-        instructions: "",
-        imageURL: "https://via.placeholder.com/600x400",
-        cookingTime: 0,
-        nutrients: [],
-        userOwner: userID,
-    });
+  const [recipe, setRecipe] = useState({
+    name: "",
+    ingredients: [],
+    instructions: "",
+    imageURL: "https://via.placeholder.com/600x400",
+    cookingTime: 0,
+    nutrients: [],
+    userOwner: userID,
+  });
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleChange = (event) => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
     setRecipe({ ...recipe, [name]: value });
-    };
+  };
 
-    const handleIngredientChange = (event, idx) => {
-        const { value } = event.target;
-        const ingredients = recipe.ingredients;
-        ingredients[idx] = value;
-        setRecipe({ ...recipe, ingredients });
-    };
+  const handleIngredientChange = (event, idx) => {
+    const { value } = event.target;
+    const ingredients = recipe.ingredients;
+    ingredients[idx] = value;
+    setRecipe({ ...recipe, ingredients });
+  };
 
-    const onSubmit = async (event) => {
+  // const uploadProps = {
+  //   name: "file",
+  //   multiple: false,
+  //   action: "http://localhost:3001/recipes",
+  //   headers: { Authorization: cookies.access_token },
+  //   onChange(info) {
+  //     const { status } = info.file;
+  //     if (status !== "uploading") {
+  //       console.log(info.file, info.fileList);
+  //     }
+  //     if (status === "done") {
+  //       message.success(`${info.file.name} file uploaded successfully.`);
+  //     } else if (status === "error") {
+  //       message.error(`${info.file.name} file upload failed.`);
+  //     }
+  //   },
+  //   onDrop(e) {
+  //     console.log("Dropped files", e.dataTransfer.files);
+  //   },
+  // };
+
+  const onSubmit = async (event) => {
+    try {
+      (async () => {
         try {
-            (async () => {
-                try {
-                    const nutrients = await getNutrients(recipe.ingredients);
-                    console.log(nutrients);
-                  // You can use the nutrients list here
-                } catch (error) {
-                  // Handle errors here
-                    console.error(error);
-                }})()
-
-        await axios.post("http://localhost:3001/recipes", recipe, {
-            headers: { Authorization: cookies.access_token },
-        });
-        alert("Recipe Created");
-        navigate("/");
-        } catch (err) {
-        console.error(err);
+          const nutrients = await getNutrients(recipe.ingredients);
+          console.log(nutrients);
+          // You can use the nutrients list here
+        } catch (error) {
+          // Handle errors here
+          console.error(error);
         }
-    };
+      })();
 
-    const [form] = Form.useForm();
-    return (
-        <div className="CreateRecipe">
-        <h2>Create Recipe</h2>
+      await axios.post("http://localhost:3001/recipes", recipe, {
+        headers: { Authorization: cookies.access_token },
+      });
+      alert("Recipe Created");
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-        <Form
-            labelCol={{ span: 6 }}
-            wrapperCol={{ span: 18 }}
-            form={form}
-            name="CreateRecipe"
-            style={{ maxWidth: 600 }}
-            autoComplete="off"
-            initialValues={{ items: [{}] }}
-            onFinish={onSubmit}
+  const [form] = Form.useForm();
+  return (
+    <div className="CreateRecipe">
+      <h2>Create Recipe</h2>
+
+      <Form
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 18 }}
+        form={form}
+        name="CreateRecipe"
+        style={{ maxWidth: 600 }}
+        autoComplete="off"
+        initialValues={{ items: [{}] }}
+        onFinish={onSubmit}
+      >
+        <Form.Item
+          label="Recipe Name"
+          tooltip="What is the name of your new Recipe?"
+          rules={[{ required: true }]}
         >
-        <Form.Item label="Recipe Name"  tooltip="What is the name of your new Recipe?" rules={[{ required: true }]} >
-            <Input name="name" onChange={handleChange} />
+          <Input name="name" onChange={handleChange} />
         </Form.Item>
 
         <Form.List name="ingredients">
-            {(ingredients, { add, remove }) => (
-                <div style={{ display: "flex", rowGap: 16, flexDirection: "column" }} >
-                {ingredients.map((ingredient, idx) => (
-                    <Card size="small" title={`Ingredient ${ingredient.name + 1}`} key={ingredient.key} extra={ <CloseOutlined onClick={() => { remove(ingredient.name); }} />}>
-                    
-                    <Form.Item label={`Ingredient ${ingredient.name + 1}`} > 
-                        <Input name={[ingredient.name, "name"]} onChange={(event) => handleIngredientChange(event, idx)}/> 
-                    </Form.Item>
-
-                    </Card>))}
-                <Button type="dashed" onClick={() => add()} block>
-                    + Add Item
-                </Button>
-                </div>
-                        )}
+          {(ingredients, { add, remove }) => (
+            <div
+              style={{ display: "flex", rowGap: 16, flexDirection: "column" }}
+            >
+              {ingredients.map((ingredient, idx) => (
+                <Card
+                  size="small"
+                  title={`Ingredient ${ingredient.name + 1}`}
+                  key={ingredient.key}
+                  extra={
+                    <CloseOutlined
+                      onClick={() => {
+                        remove(ingredient.name);
+                      }}
+                    />
+                  }
+                >
+                  <Form.Item label={`Ingredient ${ingredient.name + 1}`}>
+                    <Input
+                      name={[ingredient.name, "name"]}
+                      onChange={(event) => handleIngredientChange(event, idx)}
+                    />
+                  </Form.Item>
+                </Card>
+              ))}
+              <Button type="dashed" onClick={() => add()} block>
+                + Add Item
+              </Button>
+            </div>
+          )}
         </Form.List>
-        
-        <Form.Item label="Recipe Instructions"  tooltip="How do I make this?" rules={[{ required: true }]}>
-            <Input.TextArea name='instructions' onChange={handleChange}/>
+
+        <Form.Item
+          label="Recipe Instructions"
+          tooltip="How do I make this?"
+          rules={[{ required: true }]}
+        >
+          <Input.TextArea name="instructions" onChange={handleChange} />
         </Form.Item>
 
-        <Form.Item label="Meal Photo"  tooltip="How should it look when finished?" rules={[{ required: false }]} >
-            <Input name="imageURL" onChange={handleChange} />
+        <Form.Item
+          label="Meal Photo"
+          tooltip="How should it look when finished?"
+          rules={[{ required: false }]}
+        >
+          <Input name="imageURL" onChange={handleChange} />
         </Form.Item>
 
-        <Form.Item label="Cook Time" tooltip="How many minutes will this take?" rules={[{ required: true }]}>
-            <Input name="cookingTime" onChange={handleChange}/>
+        <Form.Item
+          label="Cook Time"
+          tooltip="How many minutes will this take?"
+          rules={[{ required: true }]}
+        >
+          <Input name="cookingTime" onChange={handleChange} />
         </Form.Item>
 
         <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Create Recipe
-            </Button>
+          <Button type="primary" htmlType="submit">
+            Create Recipe
+          </Button>
         </Form.Item>
-        </Form>
+      </Form>
 
+      {/* <Dragger {...uploadProps}>
+        <p className="ant-upload-drag-icon">
+          <InboxOutlined />
+        </p>
+        <p className="ant-upload-text">
+          Click or drag file to this area to upload
+        </p>
+        <p className="ant-upload-hint">
+          Upload one photo only
+        </p>
+      </Dragger> */}
     </div>
-    );
+  );
 };
-
