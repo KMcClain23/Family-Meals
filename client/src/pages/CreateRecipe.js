@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { CloseOutlined, InboxOutlined } from "@ant-design/icons";
-import { Button, Card, Form, Input, message, Upload } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
+import { Button, Card, Form, Input } from "antd";
 import getNutrients from "../lib/apiWrapper.js";
 import { useGetUserID } from "../hooks/useGetUserID";
 
