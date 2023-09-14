@@ -43,13 +43,17 @@ export const SavedRecipes = () => {
                 {savedRecipes.map((recipe) => {
                     return (
                     <Col xs={24} sm={12} md={8} lg={6} key={recipe._id}>
-                        <Card className="recipe-card" bordered={false}>
-                            <h2 className="recipe-title">{recipe.name}</h2>
-                            <img className="recipe-image" src={recipe.imageURL} alt={recipe.name} />
-                            <p>{recipe.instructions}</p>
-                            <p>Cooking Time: {recipe.cookingTime} (minutes)</p>
-                            <Button type="primary" onClick={() => { removeRecipe(recipe._id)}}>Remove Recipe</Button>
-                        </Card>
+                    <Card className="recipe-card" bordered={false}>
+                        <h1 className="recipe-title">{recipe.name}</h1>
+                        <img className="recipe-image" src={recipe.imageURL} alt={recipe.name} />
+                        <h2>Instructions: </h2><p>{recipe.instructions}</p>
+                        <h2>Cooking Time:</h2> <h3>{recipe.cookingTime} minutes</h3>
+                        <h3>Nutrients</h3>
+                        {recipe.nutrients && recipe.nutrients.map((nutrient) => (
+                            <p>{nutrient}</p>
+                            ))}
+                        <Button type="primary" onClick={() => { removeRecipe(recipe._id)}}>Remove Recipe</Button>
+                    </Card>
                     </Col>
                     );
                 })}

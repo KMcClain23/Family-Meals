@@ -10,12 +10,20 @@ const RegisterForm = () => {
 
     const onFinish = async (values) => {
         try {
-            await axios.post("http://localhost:3001/auth/register", {
+            const checkUsername = await axios.post("http://localhost:3001/auth/check-username", {
                 username: values.username,
-                password: values.password,
             });
-            alert("Registration Completed! Now login.");
-            navigate('/login');
+
+            if (checkUsername.data.message === "Username already exists") {
+                alert("Username already exists. Please choose a different one.");
+            } else {
+                await axios.post("http://localhost:3001/auth/register", {
+                    username: values.username,
+                    password: values.password,
+                });
+                alert("Registration Completed! Now login.");
+                navigate('/login');
+            }
         } catch (error) {
             console.error(error);
         }

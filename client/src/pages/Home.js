@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import getNutrients from '../lib/apiWrapper.js'
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetUserID } from "../hooks/useGetUserID";
 import { useCookies } from "react-cookie";
-import { Card, Col, Row, Button } from 'antd';
+import { Card, Col, Row, Button, Divider } from 'antd';
 import '../App.css';
 import 'antd/dist/reset.css';
 
@@ -61,28 +62,35 @@ export const Home = () => {
 
     const isRecipeSaved = (id) => savedRecipes ? savedRecipes.includes(id) : false;
 
-    const handleButtonClick = () => { navigate('/register'); };
+    const handleButtonClick = () => { navigate('/login'); };
 
     return (
         <div>
         <div className="hero-section">
-        <div className="hero-content">
-            <h1>Welcome to Our Recipe Page</h1>
-            <p>Discover and Save Delicious Recipes</p>
-            <Button type="primary" size="large" onClick={handleButtonClick}>
-            Create a Recipe Now!
-            </Button>
+            <div className="hero-content">
+                <h1>Welcome to Family Meals</h1>
+                <p>Discover and Save Delicious Recipes</p>
+                {cookies.access_token ? null : 
+                    <Button type="primary" size="large" onClick={handleButtonClick}>
+                        Login or Signup to Create a Recipe!
+                    </Button>
+                }
+            </div>
         </div>
-    </div>
+        <Divider />
         <div className="site-card-wrapper">
             <Row gutter={16}>
-                {recipes.map((recipe) => (
+            {recipes.map((recipe) => (
                 <Col xs={24} sm={12} md={8} lg={6} key={recipe._id}>
                     <Card className="recipe-card" bordered={false}>
-                        <h2 className="recipe-title">{recipe.name}</h2>
+                        <h1 className="recipe-title">{recipe.name}</h1>
                         <img className="recipe-image" src={recipe.imageURL} alt={recipe.name} />
-                        <p>{recipe.instructions}</p>
-                        <p>Cooking Time: {recipe.cookingTime} (minutes)</p>
+                        <h2>Instructions: </h2><p>{recipe.instructions}</p>
+                        <h2>Cooking Time:</h2> <h3>{recipe.cookingTime} minutes</h3>
+                        <h3>Nutrients</h3>
+                        {recipe.nutrients && recipe.nutrients.map((nutrient) => (
+                            <p>{nutrient}</p>
+                            ))}
                         <Button
                         type="primary"
                         onClick={() => saveRecipe(recipe._id)}
@@ -92,7 +100,7 @@ export const Home = () => {
                         </Button>
                     </Card>
                 </Col>
-                ))}
+            ))}
             </Row>
             </div>
         </div>

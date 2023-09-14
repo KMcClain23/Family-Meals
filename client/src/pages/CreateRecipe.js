@@ -37,45 +37,22 @@ export const CreateRecipe = () => {
     setRecipe({ ...recipe, ingredients });
   };
 
-  // const uploadProps = {
-  //   name: "file",
-  //   multiple: false,
-  //   action: "http://localhost:3001/recipes",
-  //   headers: { Authorization: cookies.access_token },
-  //   onChange(info) {
-  //     const { status } = info.file;
-  //     if (status !== "uploading") {
-  //       console.log(info.file, info.fileList);
-  //     }
-  //     if (status === "done") {
-  //       message.success(`${info.file.name} file uploaded successfully.`);
-  //     } else if (status === "error") {
-  //       message.error(`${info.file.name} file upload failed.`);
-  //     }
-  //   },
-  //   onDrop(e) {
-  //     console.log("Dropped files", e.dataTransfer.files);
-  //   },
-  // };
-
   const onSubmit = async (event) => {
     try {
-      (async () => {
+      await (async () => {
         try {
           const nutrients = await getNutrients(recipe.ingredients);
-          console.log(nutrients);
-          // You can use the nutrients list here
+          recipe.nutrients = nutrients
+          await axios.post("http://localhost:3001/recipes", recipe, {
+            headers: { Authorization: cookies.access_token },
+          });
+          alert("Recipe Created");
+          navigate("/");
         } catch (error) {
-          // Handle errors here
           console.error(error);
         }
       })();
 
-      await axios.post("http://localhost:3001/recipes", recipe, {
-        headers: { Authorization: cookies.access_token },
-      });
-      alert("Recipe Created");
-      navigate("/");
     } catch (err) {
       console.error(err);
     }
@@ -168,17 +145,6 @@ export const CreateRecipe = () => {
         </Form.Item>
       </Form>
 
-      {/* <Dragger {...uploadProps}>
-        <p className="ant-upload-drag-icon">
-          <InboxOutlined />
-        </p>
-        <p className="ant-upload-text">
-          Click or drag file to this area to upload
-        </p>
-        <p className="ant-upload-hint">
-          Upload one photo only
-        </p>
-      </Dragger> */}
     </div>
   );
 };

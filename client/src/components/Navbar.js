@@ -1,85 +1,73 @@
 import React from 'react';
+import { FloatButton } from 'antd'; 
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-import { Menu } from 'antd';
-import { HomeOutlined, LoginOutlined, LogoutOutlined, PlusCircleOutlined, HeartOutlined } from '@ant-design/icons';
-
-const { SubMenu } = Menu;
+import { HomeOutlined, LogoutOutlined, PlusCircleOutlined, HeartOutlined, PlusOutlined, EditOutlined, IdcardOutlined } from '@ant-design/icons';
 
 export const Navbar = () => {
-  const [cookies, setCookies] = useCookies(["access_token"]);
-  const navigate = useNavigate();
+    const [cookies, setCookies] = useCookies(["access_token"]);
+    const navigate = useNavigate();
 
-  const logout = () => {
-    setCookies("access_token", "");
-    window.localStorage.clear();
-    navigate("/");
-  };
+    const logout = () => {
+        setCookies("access_token", "");
+        window.localStorage.clear();
+        navigate("/");
+    };
 
-  const items = [
-    {
-      label: 'Home',
-      key: 'home',
-      icon: <HomeOutlined />,
-      path: "/"
-    },
-  ];
+    const buttons = [
+        {
+            label: 'Home',
+            icon: <span style={{ fontSize: '24px', height: '40px', width: '40px' }}><HomeOutlined /></span>,
+            onClick: () => navigate("/"),
+            description: 'Home'
+        },
+        {
+            label: 'Signup',
+            icon: <span style={{ fontSize: '24px', height: '40px', width: '40px' }}><IdcardOutlined /></span>,
+            onClick: () => navigate("/register"),
+            description: 'Signup'
+        },
+    ];
 
-  if (cookies.access_token) {
-    items.push(
-      {
-        label: 'Recipes',
-        key: 'recipes',
-        icon: <HeartOutlined />,
-        children: [
-          {
+    if (cookies.access_token) {
+        buttons.push(
+        {
             label: 'Create Recipe',
-            key: 'create',
-            icon: <PlusCircleOutlined />,
-            path: "/CreateRecipe"
-          },
-          {
+            icon: <span style={{ fontSize: '24px', height: '40px', width: '40px' }}><PlusCircleOutlined /></span>,
+            onClick: () => navigate("/CreateRecipe"),
+            description: 'New Recipe',
+        },
+        {
             label: 'Saved Recipes',
-            key: 'saved',
-            icon: <HeartOutlined />,
-            path: "/SavedRecipes"
-          },
-        ]
-      },
-      {
-        label: 'Logout',
-        key: 'logout',
-        icon: <LogoutOutlined />,
-        path: "/logout",
-        onClick: logout
-      }
-    );
-  } else {
-    items.push({
-      label: 'Login/Register',
-      key: 'auth',
-      icon: <LoginOutlined />,
-      path: "/Login"
-    });
-  }
+            icon: <span style={{ fontSize: '24px', height: '40px', width: '40px' }}><HeartOutlined /></span>,
+            onClick: () => navigate("/SavedRecipes"),
+            description: 'View Saved'
+        },
+        {
+            label: 'Edit User',
+            icon: <span style={{ fontSize: '24px', height: '40px', width: '40px' }}><EditOutlined /></span>,
+            onClick: () => navigate("/EditUser"),
+            description: 'Edit Info'
+        },
+        {
+            label: 'Logout',
+            icon: <span style={{ fontSize: '24px', height: '40px', width: '40px' }}><LogoutOutlined /></span>,
+            onClick: logout,
+            description: 'Logout'
+        }
+        );
+    }
 
-  return (
-    <Menu mode="horizontal" theme="dark">
-      {items.map(item => (
-        item.children ? (
-          <SubMenu key={item.key} icon={item.icon} title={item.label}>
-            {item.children.map(subItem => (
-              <Menu.Item key={subItem.key} icon={subItem.icon} onClick={() => navigate(subItem.path)}>
-                {subItem.label}
-              </Menu.Item>
-            ))}
-          </SubMenu>
-        ) : (
-          <Menu.Item key={item.key} icon={item.icon} onClick={item.onClick || (() => navigate(item.path))}>
-            {item.label}
-          </Menu.Item>
-        )
-      ))}
-    </Menu>
-  );
+    return (
+        <>
+            <FloatButton.Group
+                trigger="hover"
+                type="primary"
+                style={{ right: 24 }}
+                icon={<PlusOutlined />}
+            >
+                {buttons.map(button => <FloatButton key={button.label} {...button} />)}
+            </FloatButton.Group>
+        </>
+    );
 };
