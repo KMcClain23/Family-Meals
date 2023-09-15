@@ -13,7 +13,7 @@ export const SavedRecipes = () => {
     useEffect(() => {
         const fetchSavedRecipe = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/recipes/savedRecipes/${userID}`, {
+                const response = await axios.get(`https://family-recipe-server.onrender.com/recipes/savedRecipes/${userID}`, {
                     headers: {
                         'Authorization': cookies.access_token
                     }
@@ -28,7 +28,7 @@ export const SavedRecipes = () => {
 
     const removeRecipe = async (recipeID) => {
         try {
-            await axios.delete(`http://localhost:3001/recipes/${recipeID}`, { headers: { Authorization: cookies?.access_token } });
+            await axios.delete(`https://family-recipe-server.onrender.com/recipes/${recipeID}`, { headers: { Authorization: cookies?.access_token } });
             setSavedRecipes(savedRecipes.filter(recipe => {
                 return recipe._id !== recipeID;
             }));

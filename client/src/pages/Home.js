@@ -17,7 +17,7 @@ export const Home = ({ isDarkMode}) => {
     useEffect(() => {
         const fetchRecipe = async () => {
         try {
-            const response = await axios.get("http://localhost:3001/recipes");
+            const response = await axios.get("https://family-recipe-server.onrender.com/recipes");
             setRecipes(response.data);
         } catch (err) {
             console.error(err);
@@ -26,7 +26,7 @@ export const Home = ({ isDarkMode}) => {
 
         const fetchSavedRecipe = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/recipes/savedRecipes/ids/${userID}`);
+            const response = await axios.get(`https://family-recipe-server.onrender.com/recipes/savedRecipes/ids/${userID}`);
             if (response.data && Array.isArray(response.data.savedRecipes)) {
             setSavedRecipes(response.data.savedRecipes);
             } else {
@@ -48,7 +48,7 @@ export const Home = ({ isDarkMode}) => {
 
     const saveRecipe = async (recipeID) => {
         try {
-        const response = await axios.put("http://localhost:3001/recipes", {recipeID, userID}, { headers: { Authorization: cookies.access_token }});
+        const response = await axios.put("https://family-recipe-server.onrender.com/recipes", {recipeID, userID}, { headers: { Authorization: cookies.access_token }});
         setSavedRecipes(response.data.savedRecipes);
         } catch (err) {
         console.error(err);

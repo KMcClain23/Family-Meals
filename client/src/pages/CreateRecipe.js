@@ -39,7 +39,7 @@ export const CreateRecipe = () => {
     try {
       const nutrients = await getNutrients(recipe.ingredients);
       recipe.nutrients = nutrients;
-      await axios.post("http://localhost:3001/recipes", recipe, {
+      await axios.post("https://family-recipe-server.onrender.com/recipes", recipe, {
         headers: { Authorization: cookies.access_token },
       });
       alert("Recipe Created");

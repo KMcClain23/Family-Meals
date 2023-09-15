@@ -24,7 +24,7 @@ export const DeleteUser = () => {
         const userID = window.localStorage.getItem("userID");
         if (userID) {
         axios
-            .get(`http://localhost:3001/Auth/users/${userID}`, {
+            .get(`https://family-recipe-server.onrender.com/Auth/users/${userID}`, {
             headers: {
                 Authorization: `${cookies.access_token}`,
             },
@@ -46,7 +46,7 @@ export const DeleteUser = () => {
         }
 
         const result = await axios.delete(
-            `http://localhost:3001/auth/users/${user._id}`,
+            `https://family-recipe-server.onrender.com/auth/users/${user._id}`,
             {
                 data: {
                     username: values.username,

@@ -16,7 +16,7 @@ const EditUser = () => {
     useEffect(() => {
         const userID = window.localStorage.getItem("userID");
         if (userID) {
-            axios.get(`http://localhost:3001/Auth/users/${userID}`, {
+            axios.get(`https://family-recipe-server.onrender.com/Auth/users/${userID}`, {
                 headers: {
                     Authorization: `Bearer ${cookies.access_token}`,
                 },
@@ -32,7 +32,7 @@ const EditUser = () => {
 
     const onFinish = async (values) => {
         try {
-            const result = await axios.put(`http://localhost:3001/auth/users/${user._id}`, {
+            const result = await axios.put(`https://family-recipe-server.onrender.com/auth/users/${user._id}`, {
                 username: values.username,
                 password: values.password,
                 newPassword: values.newPassword,
