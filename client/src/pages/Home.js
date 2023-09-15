@@ -78,7 +78,7 @@ export const Home = () => {
         <Row gutter={16}>
             {recipes.map((recipe) => (
                 <Col xs={24} sm={12} md={8} lg={6} key={recipe._id}>
-                <Card className="recipe-card" bordered={false}>
+                <Card className="recipe-card" bordered={false} style={{ marginLeft: '20px', marginRight: '20px' }}>
                     <h1 className="recipe-title">{recipe.name}</h1>
                     <img className="recipe-image" src={recipe.imageURL} alt={recipe.name} />
                     <h2>Instructions: </h2><p>{recipe.instructions}</p>

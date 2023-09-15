@@ -25,7 +25,8 @@ export const DeleteUser = () => {
         const userID = window.localStorage.getItem("userID");
         if (userID) {
         // Fetch user data using the user's ID from your API
-        axios.get(`http://localhost:3001/Auth/users/${userID}`, {
+        axios
+            .get(`http://localhost:3001/Auth/users/${userID}`, {
             headers: {
                 Authorization: `${cookies.access_token}`,
             },
@@ -39,8 +40,8 @@ export const DeleteUser = () => {
         }
     }, [cookies.access_token]);
 
-    const onFinish = async (values) => {
-        try {
+    const deleteAccount = async (values) => {
+    try {
         // Check if the current user matches the user to be deleted
         if (user.username !== values.username) {
             // Display an error message using Ant Design's message component
@@ -51,13 +52,13 @@ export const DeleteUser = () => {
         const result = await axios.delete(
             `http://localhost:3001/auth/users/${user._id}`,
             {
-            data: {
-                username: values.username,
-                password: values.password,
-            },
-            headers: {
-                Authorization: `Bearer ${cookies.access_token}`,
-            },
+                data: {
+                    username: values.username,
+                    password: values.password,
+                },
+                headers: {
+                    Authorization: `Bearer ${cookies.access_token}`,
+                },
             }
         );
 
@@ -65,10 +66,10 @@ export const DeleteUser = () => {
             setMessageText(result.data.message);
         } else {
             // Successfully deleted the user
-            // Logout the user
+            // Logout the user and navigate to the home page
             logout();
         }
-        } catch (error) {
+    } catch (error) {
         console.error(error);
 
         if (
@@ -86,73 +87,76 @@ export const DeleteUser = () => {
         ) {
             setMessageText("Username or Password is incorrect.");
         }
-        }
-    };
+    }
+};
 
     return (
-        <div style={{ backgroundColor: "lightcoral", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "50vh" }}>
-            <Form
-                form={form}
-                name="delete_user_form"
-                onFinish={onFinish}
-                labelCol={{ span: 6 }}
-                wrapperCol={{ span: 18 }}
-                style={{ maxWidth: 600, width: "100%", padding: "20px" }}
-                >
+        <div
+        style={{
+            backgroundColor: "lightcoral",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: "50vh",
+        }}
+        >
+        <Form
+            form={form}
+            name="delete_user_form"
+            labelCol={{ span: 6 }}
+            wrapperCol={{ span: 18 }}
+            style={{ maxWidth: 600, width: "100%", padding: "20px" }}
+        >
             <h2>Delete User</h2>
             {messageText && <p>{messageText}</p>}
             <Form.Item
-                name="username"
-                rules={[
+            name="username"
+            rules={[
                 {
-                    required: true,
-                    message: "Please enter your Username!",
+                required: true,
+                message: "Please enter your Username!",
                 },
-                ]}
+            ]}
             >
-                <Input
-                prefix={
-                    <UserOutlined className="site-form-item-icon" />
-                }
+            <Input
+                prefix={<UserOutlined className="site-form-item-icon" />}
                 placeholder="Username (Required)"
-                />
+            />
             </Form.Item>
             <Form.Item
-                name="password"
-                rules={[
+            name="password"
+            rules={[
                 {
-                    required: true,
-                    message: "Please enter your Password!",
+                required: true,
+                message: "Please enter your Password!",
                 },
-                ]}
+            ]}
             >
-                <Input
-                prefix={
-                    <LockOutlined className="site-form-item-icon" />
-                }
+            <Input
+                prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
                 placeholder="Password (Required)"
-                />
+            />
             </Form.Item>
             <Form.Item>
-                <Popconfirm
+            <Popconfirm
                 title="Are you sure you want to delete your account?"
-                onConfirm={logout} // Call the logout function when confirmed
+                onConfirm={() => deleteAccount(form.getFieldsValue())} // Call the deleteAccount function when confirmed
                 okText="Yes"
                 cancelText="No"
-                >
+            >
                 <Button
-                    type="primary"
-                    danger
-                    htmlType="submit"
-                    className="login-form-button"
+                type="primary"
+                danger
+                className="login-form-button"
                 >
-                    Delete Account
+                Delete Account
                 </Button>
-                </Popconfirm>
-                Or <Link to="/edituser">Edit User</Link>
+            </Popconfirm>
+            Or <Link to="/edituser">Edit User</Link>
             </Form.Item>
-            </Form>
+        </Form>
         </div>
     );
 };
