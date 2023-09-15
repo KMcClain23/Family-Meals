@@ -30,7 +30,7 @@ const RegisterForm = () => {
     };
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
+        <div style={{ backgroundColor: "aliceblue", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "50vh" }}>
             <Form
                 form={form}
                 name="normal_register"

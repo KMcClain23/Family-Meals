@@ -46,24 +46,23 @@ router.post("/login", async (req, res) => {
 
 export const verifyToken = (req, res, next) => {
     const token = req.headers.authorization;
-    console.log("Received token:", token);
 
     if (token) {
-        console.log(SECRET_KEY);
-        jwt.verify(token.replace("Bearer ", ""), SECRET_KEY, (err, decodedToken) => {
+        jwt.verify(token, SECRET_KEY, (err, decodedToken) => {
             if (err) {
                 console.error("Token verification failed:", err);
                 return res.sendStatus(403);
             }
             
+            req.userId = decodedToken.id;
+
             console.log("Decoded token:", decodedToken);
             next();
         });
     } else {
         console.error("No token provided.");
         res.sendStatus(401);
-    }
-};
+    }}
 
 router.put("/users/:id", verifyToken, async (req, res) => {
     const id = req.params.id;

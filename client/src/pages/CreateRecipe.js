@@ -51,7 +51,7 @@ export const CreateRecipe = () => {
 
   const [form] = Form.useForm();
   return (
-    <div className="CreateRecipe" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
+    <div className="CreateRecipe" style={{ backgroundColor: "aliceblue", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "50vh" }}>
       <h2>Create Recipe</h2>
       <Form
         labelCol={{ span: 6 }}
@@ -95,8 +95,8 @@ export const CreateRecipe = () => {
                   </Form.Item>
                 </Card>
               ))}
-              <Button type="dashed" onClick={() => add()} block style={{ width: "50%", margin: "0 auto", marginTop: "16px" }}>
-                + Add Item
+              <Button type="dashed" onClick={() => add()} block style={{ width: "50%", margin: "0 auto", marginTop: "16px", marginBottom: "16px" }}>
+                + Add Ingredient
               </Button>
             </div>
           )}
@@ -107,7 +107,7 @@ export const CreateRecipe = () => {
           tooltip="How do I make this?"
           rules={[{ required: true }]}
         >
-          <Input.TextArea name="instructions" onChange={handleChange} />
+          <Input.TextArea name="instructions" onChange={handleChange} style={{ width: '100%', minHeight: '200px' }}/>
         </Form.Item>
 
         <Form.Item

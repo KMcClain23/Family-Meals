@@ -20,7 +20,7 @@ const EditUser = () => {
             // Fetch user data using the user's ID from your API
             axios.get(`http://localhost:3001/Auth/users/${userID}`, {
                 headers: {
-                    Authorization: `${cookies.access_token}`,
+                    Authorization: `Bearer ${cookies.access_token}`,
                 },
             })
             .then((response) => {
@@ -62,6 +62,7 @@ const EditUser = () => {
     
 
     return (
+        <div style={{ backgroundColor: "aliceblue", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "50vh" }}>
         <Form
             form={form}
             name="edit_user_form"
@@ -71,7 +72,7 @@ const EditUser = () => {
             onFinish={onFinish}
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 18 }}
-            style={{ maxWidth: 600, margin: "0 auto" }}
+            style={{ maxWidth: 600, width: "100%", padding: "20px" }}
         >
             <h2>Edit User Information</h2>
             {messageText && <p>{messageText}</p>}
@@ -122,6 +123,7 @@ const EditUser = () => {
                 </Button>
             </Form.Item>
         </Form>
+        </div>
     );
 };
 

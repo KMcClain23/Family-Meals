@@ -75,7 +75,7 @@ export const Home = () => {
             </div>
         </div>
         <div className="site-card-wrapper">
-            <Row gutter={16}>
+        <Row gutter={16}>
             {recipes.map((recipe) => (
                 <Col xs={24} sm={12} md={8} lg={6} key={recipe._id}>
                 <Card className="recipe-card" bordered={false}>
@@ -93,14 +93,14 @@ export const Home = () => {
                     <Button
                     type="primary"
                     onClick={() => saveRecipe(recipe._id)}
-                    disabled={isRecipeSaved(recipe._id)}
+                    disabled={!cookies.access_token || isRecipeSaved(recipe._id)}
                     >
-                    {isRecipeSaved(recipe._id) ? "Saved" : "Save Recipe"}
+                    {cookies.access_token ? (isRecipeSaved(recipe._id) ? "Saved" : "Save Recipe") : "Login to Save"}
                     </Button>
                 </Card>
                 </Col>
             ))}
-            </Row>
+        </Row>
         </div>
         </div>
     );
