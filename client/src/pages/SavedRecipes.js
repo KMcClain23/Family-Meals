@@ -38,7 +38,7 @@ export const SavedRecipes = () => {
     };
 
     return (
-        <div className="site-card-wrapper">
+        <Card className="site-card-wrapper">
             <Row gutter={16}>
                 {savedRecipes.map((recipe) => {
                     return (
@@ -61,6 +61,6 @@ export const SavedRecipes = () => {
                     );
                 })}
             </Row>
-        </div>
+        </Card>
     );
 };

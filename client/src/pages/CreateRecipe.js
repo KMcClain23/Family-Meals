@@ -1,5 +1,6 @@
-import React, { useState } from "react";
 import axios from "axios";
+import { green } from '@ant-design/colors'
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { CloseOutlined } from "@ant-design/icons";
@@ -51,7 +52,7 @@ export const CreateRecipe = () => {
 
   const [form] = Form.useForm();
   return (
-    <div className="CreateRecipe" style={{ backgroundColor: "aliceblue", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "50vh" }}>
+    <div className="CreateRecipe" style={{ backgroundColor: "cornflowerblue", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "50vh" }}>
       <h2>Create Recipe</h2>
       <Form
         labelCol={{ span: 6 }}
@@ -67,6 +68,7 @@ export const CreateRecipe = () => {
           label="Recipe Name"
           tooltip="What is the name of your new Recipe?"
           rules={[{ required: true }]}
+          className="custom-label"
         >
           <Input name="name" onChange={handleChange} />
         </Form.Item>
@@ -106,6 +108,7 @@ export const CreateRecipe = () => {
           label="Recipe Instructions"
           tooltip="How do I make this?"
           rules={[{ required: true }]}
+          className="custom-label"
         >
           <Input.TextArea name="instructions" onChange={handleChange} style={{ width: '100%', minHeight: '200px' }}/>
         </Form.Item>
@@ -114,6 +117,7 @@ export const CreateRecipe = () => {
           label="Meal Photo"
           tooltip="How should it look when finished?"
           rules={[{ required: false }]}
+          className="custom-label"
         >
           <Input name="imageURL" onChange={handleChange} />
         </Form.Item>
@@ -122,12 +126,14 @@ export const CreateRecipe = () => {
           label="Cook Time"
           tooltip="How many minutes will this take?"
           rules={[{ required: true }]}
+          className="custom-label"
         >
           <Input name="cookingTime" onChange={handleChange} />
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" style={{ backgroundColor: '#52c41a', borderColor: '#52c41a' }}
+>
             Create Recipe
           </Button>
         </Form.Item>

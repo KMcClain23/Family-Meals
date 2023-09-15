@@ -15,42 +15,42 @@
     width: 100%;
 }
 
-body {
+/* body {
     background-color: rgb(2, 2, 44);
+} */
+
+.custom-label label {
+  color: black !important; 
 }
 
 .recipe-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 1em;
-}
-
-.recipe-card {
-    width: 100%;
-}
-
-.recipe-image {
+  }
+  
+  .recipe-image {
     width: 100%;
     height: auto;
-}
-
-@media (max-width: 600px) {
+  }
+  
+  @media (max-width: 600px) {
     .recipe-grid {
-        grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
-}
-
-@media (max-width: 320px) {
+  }
+  
+  @media (max-width: 320px) {
     .recipe-grid {
-        grid-template-columns: 1fr;
+      grid-template-columns: 1fr;
     }
-}
-
-.recipe-title {
+  }
+  
+  .recipe-title {
     text-align: center;
     font-size: 24px;
     font-weight: bold;
-}
+  }
 
 .hero-section {
     background-image: url('../src/images/heroImage.jpg');

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Form, Input, message } from 'antd';
+import { Button, Card, Form, Input, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const EditUser = () => {
@@ -62,7 +62,7 @@ const EditUser = () => {
     
 
     return (
-        <div style={{ backgroundColor: "aliceblue", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "50vh" }}>
+        <div style={{ backgroundColor: "cornflowerblue", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "50vh" }}>
         <Form
             form={form}
             name="edit_user_form"
@@ -72,8 +72,8 @@ const EditUser = () => {
             onFinish={onFinish}
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 18 }}
-            style={{ maxWidth: 600, width: "100%", padding: "20px" }}
-        >
+            style={{ maxWidth: 605, width: "100%", padding: "20px" }}
+            >
             <h2>Edit User Information</h2>
             {messageText && <p>{messageText}</p>}
             <Form.Item

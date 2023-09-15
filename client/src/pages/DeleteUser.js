@@ -117,6 +117,7 @@ export const DeleteUser = () => {
                 required: true,
                 message: "Please enter your Username!",
                 },
+            
             ]}
             >
             <Input
@@ -141,7 +142,7 @@ export const DeleteUser = () => {
             </Form.Item>
             <Form.Item>
             <Popconfirm
-                title="Are you sure you want to delete your account?"
+                title="Are you sure you want to delete your account? &#9785;"
                 onConfirm={() => deleteAccount(form.getFieldsValue())} // Call the deleteAccount function when confirmed
                 okText="Yes"
                 cancelText="No"
