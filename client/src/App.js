@@ -8,6 +8,7 @@ import { Navbar } from './components/Navbar';
 import Login from './pages/Login';
 import Register from './pages/RegisterForm';
 import EditUser from './pages/EditUser.js';
+import { DeleteUser } from './pages/DeleteUser';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/createRecipe' element={<CreateRecipe />} />
           <Route path='/savedRecipes' element={<SavedRecipes />} />
+          <Route path='/deleteUser' element={<DeleteUser />} />
         </Routes>
       </Router>
     </div>

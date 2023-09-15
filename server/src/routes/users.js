@@ -46,23 +46,46 @@ router.post("/login", async (req, res) => {
 
 export const verifyToken = (req, res, next) => {
     const token = req.headers.authorization;
+    console.log("Received token:", token);
 
     if (token) {
-        jwt.verify(token, SECRET_KEY, (err, decodedToken) => {
+        jwt.verify(token.replace("Bearer ", ""), SECRET_KEY, (err, decodedToken) => {
             if (err) {
                 console.error("Token verification failed:", err);
                 return res.sendStatus(403);
             }
-            
-            req.userId = decodedToken.id;
 
+            req.userId = decodedToken.id;
+            
+            // If verification is successful, you can log the decoded token for debugging
             console.log("Decoded token:", decodedToken);
             next();
         });
     } else {
         console.error("No token provided.");
         res.sendStatus(401);
-    }}
+    }
+};
+
+// export const verifyToken = (req, res, next) => {
+//     const token = req.headers.authorization;
+
+//     if (token) {
+//         jwt.verify(token, SECRET_KEY, (err, decodedToken) => {
+//             if (err) {
+//                 console.error("Token verification failed:", err);
+//                 return res.sendStatus(403);
+//             }
+            
+            // req.userId = decodedToken.id;
+
+//             console.log("Decoded token:", decodedToken);
+//             next();
+//         });
+//     } else {
+//         console.error("No token provided.");
+//         res.sendStatus(401);
+//     }}
 
 router.put("/users/:id", verifyToken, async (req, res) => {
     const id = req.params.id;
@@ -170,6 +193,28 @@ router.post("/check-username", async (req, res) => {
             // Username is available, send a response indicating that
             res.json({ message: "Username is available" });
         }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error." });
+    }
+});
+
+// Define a DELETE route to delete a user by userID
+router.delete("/users/:id", verifyToken, async (req, res) => {
+    try {
+        const userID = req.params.id; // Get the userID from the request parameters
+
+        // Use the UserModel to find and remove the user by their userID
+        const deletedUser = await UserModel.findByIdAndRemove(userID);
+
+        // req.userId = decodedToken.id;
+
+        if (!deletedUser) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        // Return a success message as a JSON response
+        res.json({ message: "User deleted successfully." });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Internal server error." });
