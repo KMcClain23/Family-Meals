@@ -13,10 +13,9 @@
 
 ### Join us at Family Meals, where recipes aren't just instructions; they are a celebration of family, love, and the joy of cooking together. Embrace your culinary heritage, share your love through recipes, and savor the taste of tradition. Welcome to a world where food truly brings families closer, one recipe at a time.
 
-## Authors
+## Author
 
 - [Kevin McClain](https://github.com/kmcclain23)
-
 
 
 ## Support
@@ -36,8 +35,6 @@ For support, email KevinMcClain2023@gmail.com.
 
 Creating the Family Meals website was an incredibly enjoyable journey, filled with late-night coding sessions, occasional moments of frustration that only a colleague or my trusty rubber ducky could solve, and too many Monster energy drinks. While it presented its fair share of challenges, every obstacle was a chance to learn and grow. The satisfaction of seeing the platform come to life, where culinary traditions could be celebrated and preserved, made every effort worthwhile. This project has been a labor of love, and I'm committed to continually improving it, ensuring that my family and families worldwide can continue to share their culinary legacies with the world.
 
-
-## Start Your Own
 
 ## Getting Started
 
@@ -81,9 +78,8 @@ Now you're ready to begin working on your full-stack project, which combines the
 
 
 
-
-
-
 ### Contributing
+
+[Moataz Hamdan](https://github.com/12mmhamdan)
 
 I welcome and appreciate contributions from the open-source community. Whether you're fixing a bug, improving an existing feature, or adding something entirely new, your help makes this project better for everyone.
