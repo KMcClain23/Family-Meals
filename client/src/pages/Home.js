@@ -61,17 +61,17 @@ export const Home = ({ isDarkMode}) => {
 
     return (
         <div>
-        <div className={`hero-section ${isDarkMode ? 'dark' : 'light'}`}>
-            <div className="hero-content">
-            <h1>Welcome to Family Meals</h1>
-            <p>Discover and Save Delicious Recipes</p>
-            {cookies.access_token ? null : 
-                <Button type="primary" size="large" onClick={handleButtonClick}>
-                Login or Signup to Create a Recipe!
-                </Button>
-            }
+            <div className={`hero-section ${isDarkMode ? 'dark' : 'light'}`}>
+                <div className="hero-content">
+                <h1>Welcome to Family Meals</h1>
+                <p>Discover and Save Delicious Recipes</p>
+                {cookies.access_token ? null : 
+                    <Button type="primary" size="large" onClick={handleButtonClick}>
+                    Login or Signup to Create a Recipe!
+                    </Button>
+                }
+                </div>
             </div>
-        </div>
         <Card className="">
             <Row gutter={16}>
                 {recipes.map((recipe) => (

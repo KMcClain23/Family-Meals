@@ -1,6 +1,5 @@
-// import React, { useState } from "react";
 import axios from "axios";
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from "react-router-dom";
 
@@ -15,13 +14,13 @@ const RegisterForm = () => {
             });
 
             if (checkUsername.data.message === "Username already exists") {
-                alert("Username already exists. Please choose a different one.");
+                message.loading("Username already exists. Please choose a different one.");
             } else {
                 await axios.post("http://localhost:3001/auth/register", {
                     username: values.username,
                     password: values.password,
                 });
-                alert("Registration Completed! Now login.");
+                message.success("Registration Completed! Now login.");
                 navigate('/login');
             }
         } catch (error) {

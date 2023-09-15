@@ -57,7 +57,6 @@ export const verifyToken = (req, res, next) => {
 
             req.userId = decodedToken.id;
             
-            // If verification is successful, you can log the decoded token for debugging
             console.log("Decoded token:", decodedToken);
             next();
         });
@@ -92,21 +91,18 @@ router.put("/users/:id", verifyToken, async (req, res) => {
     const { username, password, newPassword } = req.body;
 
     try {
-        // Find the user by ID
         const user = await UserModel.findById(id);
 
         if (!user) {
             return res.status(404).json({ message: "User not found." });
         }
 
-        // Check if the user is updating their own information
         const token = req.headers.authorization;
         const decodedToken = jwt.decode(token.replace("Bearer ", ""));
         if (!decodedToken || decodedToken.id !== user._id.toString()) {
             return res.status(403).json({ message: "Unauthorized. You can only update your own information." });
         }
 
-        // If the user wants to update the password, check if the current password is correct
         if (password) {
             const isPasswordValid = await bcrypt.compare(password, user.password);
 
@@ -114,16 +110,13 @@ router.put("/users/:id", verifyToken, async (req, res) => {
                 return res.status(401).json({ message: "Current password is incorrect." });
             }
 
-            // If newPassword is provided, hash and update the new password
             if (newPassword) {
                 const hashedNewPassword = await bcrypt.hash(newPassword, 10);
                 user.password = hashedNewPassword;
             }
         }
 
-        // If a new username is provided and it's different from the current username, update it
         if (username && username !== user.username) {
-            // Check if the new username is already taken
             const existingUser = await UserModel.findOne({ username });
 
             if (existingUser) {
@@ -133,7 +126,6 @@ router.put("/users/:id", verifyToken, async (req, res) => {
             user.username = username;
         }
 
-        // Save the updated user information
         await user.save();
 
         res.json({ message: "User information updated successfully." });
@@ -144,13 +136,10 @@ router.put("/users/:id", verifyToken, async (req, res) => {
 });
 
 
-//This will get all the users
 router.get("/users", async (req, res) => {
     try {
-        // Use the UserModel to fetch all users from the database
         const users = await UserModel.find();
 
-        // Return the users as JSON response
         res.json(users);
     } catch (error) {
         console.error(error);

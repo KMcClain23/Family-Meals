@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Card, Form, Input, message } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const EditUser = () => {
@@ -14,10 +14,8 @@ const EditUser = () => {
     const [messageText, setMessageText] = useState('');
 
     useEffect(() => {
-        // Fetch user data based on userID from localStorage
         const userID = window.localStorage.getItem("userID");
         if (userID) {
-            // Fetch user data using the user's ID from your API
             axios.get(`http://localhost:3001/Auth/users/${userID}`, {
                 headers: {
                     Authorization: `Bearer ${cookies.access_token}`,
@@ -37,7 +35,7 @@ const EditUser = () => {
             const result = await axios.put(`http://localhost:3001/auth/users/${user._id}`, {
                 username: values.username,
                 password: values.password,
-                newPassword: values.newPassword, // If you want to update the password
+                newPassword: values.newPassword,
             }, {
                 headers: {
                     Authorization: `Bearer ${cookies.access_token}`,
@@ -47,12 +45,10 @@ const EditUser = () => {
             if (result.data.message) {
                 setMessageText(result.data.message);
             } else {
-                // Successfully updated user information
                 navigate("/");
             }
         } catch (error) {
             if (error.response && error.response.status === 400 && error.response.data.message === "Username is already taken.") {
-                // Handle the case where the new username is already taken
                 setMessageText("Username is already taken. Please choose a different username.");
             } else {
                 console.error(error);
