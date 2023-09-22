@@ -72,34 +72,34 @@ export const Home = ({ isDarkMode}) => {
                 }
                 </div>
             </div>
-        <Card className="">
-            <Row gutter={16}>
-                {recipes.map((recipe) => (
-                    <Col xs={24} sm={12} md={8} lg={6} key={recipe._id} style={{ display: 'flex' }}>
-                    <Card className="" bordered={false} style={{ margin: '20px', flex: 1 }}>
-                        <h1 className="recipe-title">{recipe.name}</h1>
-                        <img className="recipe-image" src={recipe.imageURL} alt={recipe.name} />
-                        <h2>Instructions: </h2><p>{recipe.instructions}</p>
-                        <h2>Cooking Time:</h2> <h3>{recipe.cookingTime} minutes</h3>
-                        <Collapse ghost>
-                        <Collapse.Panel key="1" header="Nutrients">
-                            {recipe.nutrients && recipe.nutrients.map((nutrient, index) => (
-                            <p key={index}>{nutrient}</p>
-                            ))}
-                        </Collapse.Panel>
-                        </Collapse>
-                        <Button
-                        type="primary"
-                        onClick={() => saveRecipe(recipe._id)}
-                        disabled={!cookies.access_token || isRecipeSaved(recipe._id)}
-                        >
-                        {cookies.access_token ? (isRecipeSaved(recipe._id) ? "Saved" : "Save Recipe") : "Login to Save"}
-                        </Button>
-                    </Card>
-                    </Col>
-                ))}
-            </Row>
-        </Card>
-        </div>
+            <Card className="">
+                <Row gutter={16}>
+                    {recipes.map((recipe) => (
+                        <Col xs={24} sm={12} md={8} lg={6} key={recipe._id} style={{ display: 'flex' }}>
+                        <Card className="" bordered={false} style={{ margin: '20px', flex: 1 }}>
+                            <h1 className="recipe-title">{recipe.name}</h1>
+                            <img className="recipe-image" src={recipe.imageURL} alt={recipe.name} />
+                            <h2>Instructions: </h2><p>{recipe.instructions}</p>
+                            <h2>Cooking Time:</h2> <h3>{recipe.cookingTime} minutes</h3>
+                            <Collapse ghost>
+                            <Collapse.Panel key="1" header="Nutrients">
+                                {recipe.nutrients && recipe.nutrients.map((nutrient, index) => (
+                                <p key={index}>{nutrient}g</p>
+                                ))}
+                            </Collapse.Panel>
+                            </Collapse>
+                            <Button
+                            type="primary"
+                            onClick={() => saveRecipe(recipe._id)}
+                            disabled={!cookies.access_token || isRecipeSaved(recipe._id)}
+                            >
+                            {cookies.access_token ? (isRecipeSaved(recipe._id) ? "Saved" : "Save Recipe") : "Login to Save"}
+                            </Button>
+                        </Card>
+                        </Col>
+                    ))}
+                </Row>
+            </Card>
+            </div>
     );
 };
