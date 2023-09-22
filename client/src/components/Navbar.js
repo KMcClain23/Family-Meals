@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FloatButton } from 'antd';
 import { HomeOutlined, LogoutOutlined, PlusCircleOutlined, HeartOutlined, UserOutlined, EditOutlined, IdcardOutlined, BulbOutlined } from '@ant-design/icons';
 
-export const Navbar = ({ toggleTheme, isDarkMode }) => {
+export const Navbar = ({ toggleTheme }) => {
     const [cookies, setCookies] = useCookies(["access_token"]);
     const navigate = useNavigate();
 
@@ -17,6 +17,7 @@ export const Navbar = ({ toggleTheme, isDarkMode }) => {
     const buttons = [
         {
         label: 'Home',
+        class: 'home',
         icon: <span style={{ fontSize: '20px' }}><HomeOutlined /></span>,
         onClick: () => navigate("/"),
         description: 'Home',
@@ -24,6 +25,7 @@ export const Navbar = ({ toggleTheme, isDarkMode }) => {
         },
         {
             label: 'Toggle Theme',
+            class: 'toggle-theme',
             icon: <span style={{ fontSize: '20px' }}><BulbOutlined /></span>,
             onClick: toggleTheme,
             description: 'Toggle Theme',
@@ -47,6 +49,7 @@ export const Navbar = ({ toggleTheme, isDarkMode }) => {
         buttons.push(
         {
             label: 'Create Recipe',
+            class: 'create-recipe',
             icon: <span style={{ fontSize: '20px' }}><PlusCircleOutlined /></span>,
             onClick: () => navigate("/CreateRecipe"),
             description: 'New Recipe',
@@ -54,6 +57,7 @@ export const Navbar = ({ toggleTheme, isDarkMode }) => {
         },
         {
             label: 'Saved Recipes',
+            class: 'saved-recipes',
             icon: <span style={{ fontSize: '20px' }}><HeartOutlined /></span>,
             onClick: () => navigate("/SavedRecipes"),
             description: 'View Saved',
@@ -61,6 +65,7 @@ export const Navbar = ({ toggleTheme, isDarkMode }) => {
         },
         {
             label: 'Edit User',
+            class: 'edit-user',
             icon: <span style={{ fontSize: '20px' }}><EditOutlined /></span>,
             onClick: () => navigate("/EditUser"),
             description: 'Edit Info',
@@ -68,6 +73,7 @@ export const Navbar = ({ toggleTheme, isDarkMode }) => {
         },
         {
             label: 'Logout',
+            class: 'logout',
             icon: <span style={{ fontSize: '20px' }}><LogoutOutlined /></span>,
             onClick: logout,
             description: 'Logout',

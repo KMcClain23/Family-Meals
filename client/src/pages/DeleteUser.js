@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { Button, Form, Input, Popconfirm, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -12,6 +12,7 @@ export const DeleteUser = () => {
     const navigate = useNavigate();
 
     const logout = () => {
+        console.log('logout function called');
         setCookies("access_token", "");
         window.localStorage.clear();
         navigate("/");
@@ -58,10 +59,12 @@ export const DeleteUser = () => {
             }
         );
 
-        if (result.data.message) {
-            setMessageText(result.data.message);
-        } else {
+        console.log('status code:', result.status);
+
+        if (result.status === 200) {
             logout();
+        } else if (result.data.message) {
+            setMessageText(result.data.message);
         }
     } catch (error) {
         console.error(error);
@@ -141,11 +144,11 @@ export const DeleteUser = () => {
                 cancelText="No"
             >
                 <Button
-                type="primary"
-                danger
-                className="login-form-button"
+                    type="primary"
+                    danger
+                    className="login-form-button"
                 >
-                Delete Account
+                    Delete Account
                 </Button>
             </Popconfirm>
             Or <Link to="/edituser">Edit User</Link>

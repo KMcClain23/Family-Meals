@@ -1,4 +1,5 @@
 import axios from "axios";
+import Joyride from 'react-joyride';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetUserID } from "../hooks/useGetUserID";
@@ -13,8 +14,34 @@ export const Home = ({ isDarkMode}) => {
     const [cookies,] = useCookies(["access_token"]);
     const navigate = useNavigate();    
     const userID = useGetUserID();
+    const [firstVisit, setFirstVisit] = useState(false);
+
+    const steps = [
+        {
+            target: '.login-signup-button',
+            content: 'Click here to login or signup!',
+            placement: 'top',
+        },
+        {
+            target: '.recipe-title',
+            content: 'Here you can view the recipes that you and others have submitted.',
+            placement: 'top',
+        },
+        {
+            target: '.login-save-button',
+            content: 'Login to save a recipe!',
+            placement: 'right',
+        },
+        // add more steps as needed
+    ];
 
     useEffect(() => {
+        // check if it's the user's first visit
+        if (!localStorage.getItem('visited')) {
+            setFirstVisit(true);
+            localStorage.setItem('visited', 'true');
+        }
+
         const fetchRecipe = async () => {
         try {
             const response = await axios.get("https://family-recipe-server.onrender.com/recipes");
@@ -61,12 +88,13 @@ export const Home = ({ isDarkMode}) => {
 
     return (
         <div>
+            {firstVisit && <Joyride steps={steps} continuous={true} />}
             <div className={`hero-section ${isDarkMode ? 'dark' : 'light'}`}>
                 <div className="hero-content">
                 <h1>Welcome to Family Meals</h1>
                 <p>Discover and Save Delicious Recipes</p>
                 {cookies.access_token ? null : 
-                    <Button type="primary" size="large" onClick={handleButtonClick}>
+                    <Button type="primary" size="large" onClick={handleButtonClick} className="login-signup-button">
                     Login or Signup to Create a Recipe!
                     </Button>
                 }
@@ -91,6 +119,7 @@ export const Home = ({ isDarkMode}) => {
                             <Button
                             type="primary"
                             onClick={() => saveRecipe(recipe._id)}
+                            className="login-save-button"
                             disabled={!cookies.access_token || isRecipeSaved(recipe._id)}
                             >
                             {cookies.access_token ? (isRecipeSaved(recipe._id) ? "Saved" : "Save Recipe") : "Login to Save"}
