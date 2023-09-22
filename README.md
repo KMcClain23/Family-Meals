@@ -3,9 +3,9 @@
 
 
 # Family Meals
-### Family Meals is not just a recipe website; it's a digital sanctuary where culinary traditions are honored, shared, and preserved for generations to come. We understand the value of the handwritten recipes passed down through families, each carrying stories, memories, and a deep sense of nostalgia. Our mission is to ensure that these treasures never fade away.
+### Family Meals is not just a recipe website; it's a digital sanctuary where culinary traditions are honored, shared, and preserved for generations to come. Handwritten recipes passed down through families, each carry stories, memories, and a deep sense of nostalgia. The mission of this project is to ensure that these treasures never fade away.
 
-### Preserve Family Traditions: At Family Meals, we invite you to upload and digitize those cherished family recipes. Whether it's your grandmother's secret lasagna or your dad's famous barbecue sauce, our platform helps you immortalize these culinary legacies. Say goodbye to worn-out recipe cards and hello to a timeless online archive.
+### Preserve Family Traditions: At Family Meals, I invite you to upload and digitize those cherished family recipes. Whether it's your grandmother's secret lasagna or your dad's famous barbecue sauce, our platform helps you immortalize these culinary legacies. Say goodbye to worn-out recipe cards and hello to a timeless online archive.
 
 ### Create your recipes by adding ingredients, measurements, and step-by-step instructions. 
 
@@ -17,6 +17,7 @@
 
 - [Kevin McClain](https://github.com/kmcclain23)
 
+Currently hosted on Render at (https://family-recipe-client.onrender.com)
 
 ## Support
 
