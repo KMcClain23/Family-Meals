@@ -29,7 +29,7 @@ export const Home = ({ isDarkMode}) => {
         },
         {
             target: '.login-save-button',
-            content: 'Login to save a recipe!',
+            content: 'Once you Login, you can save your favorite recipes! Click on the floating icon at the bottom right of the screen for more actions',
             placement: 'right',
         },
         // add more steps as needed
