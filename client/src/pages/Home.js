@@ -100,11 +100,11 @@ export const Home = ({ isDarkMode}) => {
                 }
                 </div>
             </div>
-            <Card className="">
+            <Card className="recipe-card">
                 <Row gutter={16}>
                     {recipes.map((recipe) => (
                         <Col xs={24} sm={12} md={8} lg={6} key={recipe._id} style={{ display: 'flex' }}>
-                        <Card className="" bordered={false} style={{ margin: '20px', flex: 1 }}>
+                        <Card className="recipe-card" bordered={false} style={{ margin: '5px', flex: 1 }}>
                             <h1 className="recipe-title">{recipe.name}</h1>
                             <img className="recipe-image" src={recipe.imageURL} alt={recipe.name} />
                             <h2>Instructions: </h2><p>{recipe.instructions}</p>
@@ -129,6 +129,6 @@ export const Home = ({ isDarkMode}) => {
                     ))}
                 </Row>
             </Card>
-            </div>
+        </div>
     );
 };

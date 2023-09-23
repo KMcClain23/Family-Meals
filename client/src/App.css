@@ -45,6 +45,16 @@
       grid-template-columns: 1fr;
     }
   }
+
+  .recipe-card {
+    width: 100%;
+  }
+  
+  @media only screen and (min-width: 768px) {
+    .recipe-card {
+      /* Define the width for screens larger than 768px here, if necessary */
+    }
+  }
   
   .recipe-title {
     text-align: center;
