@@ -36,7 +36,7 @@ async function getNutrients(ingredients) {
         return Promise.resolve(nutrients); 
     } catch (error) {
         console.error(error);
-        return Promise.reject(error); 
+        return Promise.reject(error);  
     }
 }
 
