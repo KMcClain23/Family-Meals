@@ -4,8 +4,8 @@ import axios from 'axios';
 
 
 async function getNutrients(ingredients) {
-    const api_key = '2d8bf72605fd14dcdc1a97bde0067ebf';
-    const app_id = 'e033f46a';
+    const api_key = '4862c582bca0a9dd6946016c3a15cfb9';
+    const app_id = 'd3a27093';
     const url = `https://api.edamam.com/api/nutrition-details?app_id=${app_id}&app_key=${api_key}`;
     const headers = { 'Content-Type': 'application/json' };
 
