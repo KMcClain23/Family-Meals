@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { CloseOutlined } from "@ant-design/icons";
-import { Button, Card, Form, Input } from "antd";
+import { Button, Card, Form, Input, InputNumber } from "antd";
 import getNutrients from "../lib/apiWrapper.js";
 import { useGetUserID } from "../hooks/useGetUserID";
 
@@ -115,7 +115,7 @@ export const CreateRecipe = () => {
         <Form.Item
           label="Meal Photo"
           tooltip="How should it look when finished?"
-          rules={[{ required: false }]}
+          rules={[{ required: true, type: 'number', min: 0 }]}
           className="custom-label"
         >
           <Input name="imageURL" onChange={handleChange} />
@@ -124,8 +124,19 @@ export const CreateRecipe = () => {
         <Form.Item
           label="Cook Time"
           tooltip="How many minutes will this take?"
-          rules={[{ required: true }]}
+          rules={[
+            { required: true, message: "Please enter the cooking time" },
+            {
+              validator: (_, value) => {
+                if (isNaN(value)) {
+                  return Promise.reject(new Error("Cook time must be a number"));
+                }
+                return Promise.resolve();
+              },
+            },
+          ]}
           className="custom-label"
+          name="cookingTime"
         >
           <Input name="cookingTime" onChange={handleChange} />
         </Form.Item>

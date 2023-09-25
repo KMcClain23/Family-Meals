@@ -106,6 +106,7 @@ export const Home = ({ isDarkMode}) => {
                         <Col xs={24} sm={12} md={8} lg={6} key={recipe._id} style={{ display: 'flex' }}>
                         <Card className="recipe-card" bordered={false} style={{ margin: '5px', flex: 1 }}>
                             <h1 className="recipe-title">{recipe.name}</h1>
+                            {/* <p>User Owner: {recipe.username}</p> Display the username */}
                             <img className="recipe-image" src={recipe.imageURL} alt={recipe.name} />
                             <h2>Instructions: </h2><p>{recipe.instructions}</p>
                             <h2>Cooking Time:</h2> <h3>{recipe.cookingTime} minutes</h3>
