@@ -11,7 +11,7 @@
 
 ### Preserve Your Legacy: Don't let time erase the flavors and stories that define your family's culinary history. With Family Meals, your recipes become a lasting legacy, ensuring that the love and tradition behind each dish are never forgotten.
 
-### Join us at Family Meals, where recipes aren't just instructions; they are a celebration of family, love, and the joy of cooking together. Embrace your culinary heritage, share your love through recipes, and savor the taste of tradition. Welcome to a world where food truly brings families closer, one recipe at a time.
+### Join me at Family Meals, where recipes aren't just instructions; they are a celebration of family, love, and the joy of cooking together. Embrace your culinary heritage, share your love through recipes, and savor the taste of tradition. Welcome to a world where food truly brings families closer, one recipe at a time.
 
 ## Author
 
