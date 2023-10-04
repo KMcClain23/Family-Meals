@@ -9,6 +9,7 @@ export const SavedRecipes = () => {
     const [savedRecipes, setSavedRecipes] = useState([]);
     const [cookies,] = useCookies(["access_token"]);
     const userID = useGetUserID();
+    
 
     useEffect(() => {
         const fetchSavedRecipe = async () => {
@@ -55,7 +56,7 @@ export const SavedRecipes = () => {
                                         ))}
                                     </Collapse.Panel>
                                 </Collapse>
-                                <Button type="primary" onClick={() => { removeRecipe(recipe._id)}}>Remove Recipe</Button>
+                                <Button type="primary" onClick={() => { removeRecipe(recipe._id)}}>Unsave</Button>
                             </Card>
                         </Col>
                     );
